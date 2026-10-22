@@ -1,226 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Invidious Audio Player</title>
+<title>Invidious Music Player</title>
 <style>
-:root{--bg:#0b0b12;--card:#161622;--line:#26263a;--txt:#f1f1f7;--mut:#9a9ab3;--acc:#7c5cff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);font:15px/1.4 system-ui,sans-serif;padding:16px 16px 150px;max-width:760px;margin:auto}
-h1{font-size:20px;margin-bottom:12px}
-.row{display:flex;gap:8px;margin-bottom:10px}
-input,select,button{font:inherit;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-input{flex:1;min-width:0}
-button{cursor:pointer;background:var(--acc);border-color:var(--acc)}
-button.ghost{background:var(--card);border-color:var(--line)}
-#status{color:var(--mut);font-size:13px;margin:6px 0 12px;min-height:18px}
-.item{display:flex;gap:12px;align-items:center;padding:8px;border-radius:12px;cursor:pointer}
-.item:hover,.item.on{background:var(--card)}
-.item img{width:72px;height:54px;object-fit:cover;border-radius:8px;background:var(--line)}
-.item b{display:block;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.item small{color:var(--mut)}
-#bar{position:fixed;left:0;right:0;bottom:0;background:#12121c;border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
-#bar .in{max-width:760px;margin:auto}
-#now{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px}
-video{width:100%;max-height:200px;background:#000;border-radius:10px}
-#log{display:none;background:#12121c;border:1px solid var(--line);border-radius:10px;padding:8px;font:12px/1.4 monospace;color:var(--mut);white-space:pre-wrap;max-height:200px;overflow:auto;margin-bottom:10px}
-#emb iframe{width:100%;height:230px;border:0;border-radius:12px;margin-bottom:12px}
-.ctl{display:flex;gap:8px;margin-top:6px}
-.ctl button{flex:1}
+:root{--bg:#fff;--card:#f3f3f6;--fg:#15151a;--mut:#6b6b78;--ac:#7c3aed}
+@media (prefers-color-scheme:dark){:root{--bg:#0f0f14;--card:#1a1a22;--fg:#f1f1f5;--mut:#9a9aa8}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg);padding-bottom:150px}
+header{padding:16px;display:flex;gap:8px;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);z-index:5}
+input,button{font:inherit;color:var(--fg);background:var(--card);border:0;border-radius:10px;padding:10px 14px}
+#q{flex:1;min-width:180px}
+button{cursor:pointer}button:hover{filter:brightness(1.1)}
+.go{background:var(--ac);color:#fff}
+#inst{width:100%;font-size:12px;color:var(--mut)}
+#status{padding:0 16px;color:var(--mut);font-size:14px;min-height:20px}
+#list{padding:8px 16px;display:grid;gap:8px;max-width:800px;margin:auto}
+.row{display:flex;gap:12px;align-items:center;background:var(--card);padding:8px;border-radius:12px;cursor:pointer}
+.row.on{outline:2px solid var(--ac)}
+.row img{width:96px;height:54px;object-fit:cover;border-radius:8px;background:#888}
+.row b{display:block;font-size:14px;line-height:1.3}
+.row small{color:var(--mut)}
+.row .add{margin-left:auto;padding:6px 10px}
+#bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);padding:12px 16px;box-shadow:0 -2px 12px #0003}
+#bar .in{max-width:800px;margin:auto}
+#now{font-size:14px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#seek{width:100%;accent-color:var(--ac)}
+.ctl{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:6px}
+.ctl button{background:transparent;font-size:20px;padding:6px 12px}
+.ctl .p{background:var(--ac);color:#fff;border-radius:50%;width:48px;height:48px;padding:0}
+#vol{width:90px;accent-color:var(--ac)}
+.t{font-size:12px;color:var(--mut);display:flex;justify-content:space-between}
 </style>
 </head>
 <body>
-<h1>🎧 Invidious Audio Player</h1>
-<div class="row">
-  <input id="q" placeholder="Gaana ya artist search karo..." autocomplete="off">
-  <button id="go">Search</button>
-</div>
-<div class="row">
-  <select id="inst" style="flex:1"></select>
-  <button class="ghost" id="add" title="Apna instance add karo">+ Instance</button>
-</div>
-<label style="display:flex;gap:8px;align-items:center;color:var(--mut);font-size:13px;margin-bottom:6px"><input type="checkbox" id="emode" style="flex:none;width:auto"> Instance ka apna player use karo (website jaisa, pakka chalta hai)</label>
+<header>
+  <input id="q" placeholder="Search songs, artists…" autofocus>
+  <button class="go" id="sb">Search</button>
+  <input id="inst" placeholder="Invidious instance URL (e.g. https://yewtu.be)">
+</header>
 <div id="status"></div>
-<pre id="log"></pre>
-<div id="emb"></div>
 <div id="list"></div>
 
 <div id="bar"><div class="in">
-  <div id="now">Kuch play nahi ho raha</div>
-  <video id="a" controls playsinline preload="none"></video>
-  <div class="ctl"><button class="ghost" id="prev">⏮ Prev</button><button class="ghost" id="next">Next ⏭</button></div>
+  <div id="now">Nothing playing</div>
+  <input type="range" id="seek" min="0" max="1000" value="0">
+  <div class="t"><span id="cur">0:00</span><span id="dur">0:00</span></div>
+  <div class="ctl">
+    <button id="prev">⏮</button>
+    <button id="pp" class="p">▶</button>
+    <button id="next">⏭</button>
+    <input type="range" id="vol" min="0" max="1" step="0.01" value="1">
+  </div>
 </div></div>
+<audio id="au" preload="auto"></audio>
 
 <script>
-// Sirf Invidious. Pehla instance sabse pehle try hoga, fail ho to agla.
-const DEFAULTS = [
-  "https://yt.chocolatemoo53.com",
-  "https://invidious.nerdvpn.de",
-  "https://invidious.f5.si",
-  "https://inv.nadeko.net",
-  "https://inv-ygg.nadeko.net"
-];
-const $ = id => document.getElementById(id);
-const audio = $("a"), list = $("list"), status = $("status"), sel = $("inst");
-const logEl = $("log");
-function log(m){ logEl.style.display = "block"; logEl.textContent += m + "\n"; logEl.scrollTop = logEl.scrollHeight; }
-log("Page: " + location.protocol + "//" + (location.host || "(local file)"));
-let custom = [];
-try { custom = JSON.parse(localStorage.getItem("inv_custom") || "[]"); } catch(e){}
-let results = [], cur = -1, retry = 0;
+const $=id=>document.getElementById(id);
+const au=$('au');
+const FALLBACKS=['https://yewtu.be','https://inv.nadeko.net','https://invidious.nerdvpn.de'];
+let results=[],queue=[],idx=-1;
 
-const all = () => [...new Set([...custom, ...DEFAULTS])];
-function fillSelect(keep){
-  sel.innerHTML = '<option value="">Auto (fallback)</option>' + all().map(i => `<option>${i}</option>`).join("");
-  if (keep) sel.value = keep;
-}
-// jis order me instances try honge (selected pehle)
-function order(){
-  const a = all(); let ok = ""; try { ok = localStorage.getItem("inv_ok") || ""; } catch(e){}
-  const first = sel.value || (a.includes(ok) ? ok : "");
-  return first ? [first, ...a.filter(x => x !== first)] : a;
-}
-fillSelect();
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+$('inst').value=store('inst')||'';
+$('inst').onchange=()=>store('inst',$('inst').value.trim());
 
-$("add").onclick = () => {
-  let u = (prompt("Instance URL (jaise https://invidious.example)") || "").trim().replace(/\/+$/, "");
-  if (!/^https?:\/\//.test(u)) return;
-  custom = [u, ...custom.filter(x => x !== u)];
-  try { localStorage.setItem("inv_custom", JSON.stringify(custom)); } catch(e){}
-  fillSelect(u);
-};
-
-async function jget(url, ms = 7000){
-  const c = new AbortController(), t = setTimeout(() => c.abort(), ms);
-  try { const r = await fetch(url, {signal: c.signal}); if (!r.ok) throw new Error(r.status); return await r.json(); }
-  finally { clearTimeout(t); }
+function instances(){
+  const u=$('inst').value.trim().replace(/\/+$/,'');
+  return u?[u,...FALLBACKS.filter(x=>x!==u)]:FALLBACKS;
 }
+async function api(path){
+  let err;
+  for(const base of instances()){
+    try{
+      const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),9000);
+      const r=await fetch(base+path,{signal:ctl.signal});clearTimeout(t);
+      if(!r.ok)throw new Error(r.status);
+      const j=await r.json();
+      return {data:j,base};
+    }catch(e){err=e}
+  }
+  throw err||new Error('No instance responded');
+}
+const fmt=s=>{s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 async function search(){
-  const q = $("q").value.trim(); if (!q) return;
-  status.textContent = "Search ho raha hai...";
-  for (const inst of order()){
-    try {
-      const d = await jget(`${inst}/api/v1/search?type=video&q=${encodeURIComponent(q)}`);
-      results = d.filter(v => v.type === "video" && !v.liveNow);
-      if (!results.length){ log("search " + inst.replace("https://","") + ": 0 results"); continue; }
-      status.textContent = `${results.length} results • ${inst.replace("https://", "")}`;
-      cur = -1; render(); play(0); return;
-    } catch(e){ log("search " + inst.replace("https://","") + ": " + (e.name === "AbortError" ? "timeout 7s" : (e.message || e))); status.textContent = `${inst.replace("https://", "")} fail, agla try kar raha hoon...`; }
+  const q=$('q').value.trim();if(!q)return;
+  $('status').textContent='Searching…';
+  try{
+    const {data,base}=await api('/api/v1/search?type=video&q='+encodeURIComponent(q));
+    results=data.filter(v=>v.type==='video').map(v=>({
+      id:v.videoId,title:v.title,author:v.author,len:v.lengthSeconds,
+      thumb:'https://i.ytimg.com/vi/'+v.videoId+'/mqdefault.jpg'
+    }));
+    queue=results.slice();idx=-1;
+    $('status').textContent=results.length+' results via '+base;
+    render();
+  }catch(e){
+    $('status').textContent='Search failed. Set a working Invidious instance (with API enabled) above. ('+e.message+')';
   }
-  status.textContent = "Koi instance kaam nahi kar raha. Dusra instance add karo (+ Instance).";
 }
-
-const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,"0")}`;
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function render(){
-  list.innerHTML = results.map((v, i) => `
-    <div class="item ${i === cur ? "on" : ""}" data-i="${i}">
-      <img loading="lazy" src="https://i.ytimg.com/vi/${v.videoId}/mqdefault.jpg" alt="">
-      <div><b>${esc(v.title)}</b><small>${esc(v.author)} • ${fmt(v.lengthSeconds || 0)}</small></div>
-    </div>`).join("");
+  $('list').innerHTML=results.map((v,i)=>`<div class="row ${queue[idx]&&queue[idx].id===v.id?'on':''}" data-i="${i}">
+    <img src="${v.thumb}" loading="lazy" onerror="this.style.visibility='hidden'">
+    <div><b>${esc(v.title)}</b><small>${esc(v.author)} · ${fmt(v.len)}</small></div></div>`).join('');
 }
-list.onclick = e => { const it = e.target.closest(".item"); if (it) play(+it.dataset.i); };
+$('list').onclick=e=>{
+  const r=e.target.closest('.row');if(!r)return;
+  queue=results.slice();play(+r.dataset.i);
+};
 
-let token = 0, lastReason = "", embTimer = 0;
-let embMode = true; try { embMode = localStorage.getItem("inv_emb") !== "0"; } catch(e){}
-$("emode").checked = embMode;
-$("emode").onchange = () => { try { localStorage.setItem("inv_emb", $("emode").checked ? "1" : "0"); } catch(e){} };
-const host = u => u.replace("https://", "");
-// har instance par 3 tareeke: direct AAC, direct Opus, API se stream url
-function attempts(){ const o = []; for (const inst of order()) for (const k of ["lv140", "lv251", "lv18", "api", "apiv"]) o.push({inst, k}); return o; }
-async function srcFor(at, v){
-  if (at.k === "lv140") return `${at.inst}/latest_version?id=${v.videoId}&itag=140&local=true`;
-  if (at.k === "lv251") return `${at.inst}/latest_version?id=${v.videoId}&itag=251&local=true`;
-  if (at.k === "lv18") return `${at.inst}/latest_version?id=${v.videoId}&itag=18&local=true`;
-  if (at.k === "apiv"){
-    const d = await jget(`${at.inst}/api/v1/videos/${v.videoId}?local=true&fields=formatStreams`, 9000);
-    const f = (d.formatStreams || []).find(x => x.url);
-    if (!f) throw new Error("no video stream");
-    return f.url.startsWith("/") ? at.inst + f.url : f.url;
-  }
-  const d = await jget(`${at.inst}/api/v1/videos/${v.videoId}?local=true&fields=adaptiveFormats`, 9000);
-  const f = (d.adaptiveFormats || []).filter(x => (x.type || "").startsWith("audio/"));
-  const best = f.find(x => String(x.itag) === "140") || f[0];
-  if (!best || !best.url) throw new Error("no audio stream");
-  return best.url.startsWith("/") ? at.inst + best.url : best.url;
-}
-function tryPlay(src){
-  return new Promise(res => {
-    let done = false;
-    const fin = ok => { if (done) return; done = true; clearTimeout(t); audio.removeEventListener("playing", onP); audio.removeEventListener("error", onE); res(ok); };
-    const onP = () => fin(true), onE = () => { lastReason = "media error code " + (audio.error ? audio.error.code : "?") + " (4 = src nahi mili/blocked)"; fin(false); };
-    const t = setTimeout(() => { lastReason = "10s timeout (stream start nahi hui)"; fin(false); }, 10000);
-    audio.addEventListener("playing", onP); audio.addEventListener("error", onE);
-    audio.src = src;
-    audio.play().catch(e => { if (e && e.name === "NotAllowedError"){ status.textContent = "Play button dabao (browser ne autoplay roka)"; fin(true); } });
-  });
-}
 async function play(i){
-  if (i < 0 || i >= results.length) return;
-  const my = ++token; cur = i; const v = results[i]; $("emb").innerHTML = ""; clearTimeout(embTimer);
-  $("now").textContent = `${v.title} — ${v.author}`; render();
-  if ("mediaSession" in navigator){
-    navigator.mediaSession.metadata = new MediaMetadata({title: v.title, artist: v.author,
-      artwork: [{src: `https://i.ytimg.com/vi/${v.videoId}/mqdefault.jpg`, sizes: "320x180"}]});
-  }
-  if ($("emode").checked){
-    // instance ka apna player (jaise unki website). Gaane ki length ke baad agla gaana khud chalega.
-    try { audio.pause(); audio.removeAttribute("src"); audio.load(); } catch(e){}
-    audio.style.display = "none";
-    const inst = order()[0];
-    status.textContent = `Instance player: ${host(inst)} (agar play na ho to iframe ke andar play dabao)`;
-    $("emb").innerHTML = `<iframe allow="autoplay; fullscreen; encrypted-media" allowfullscreen src="${inst}/embed/${v.videoId}?autoplay=1&listen=1"></iframe>`;
-    embTimer = setTimeout(() => { if (my === token) playNext(); }, ((v.lengthSeconds || 240) + 4) * 1000);
-    return;
-  }
-  audio.style.display = "";
-  let last = ""; const fails = {};
-  for (const at of attempts()){
-    if (my !== token) return;
-    if ((fails[at.inst] || 0) >= 2) continue;
-    status.textContent = `Try: ${host(at.inst)} (${at.k})...`;
-    try {
-      const src = await srcFor(at, v);
-      if (my !== token) return;
-      if (await tryPlay(src)){ try { localStorage.setItem("inv_ok", at.inst); } catch(e){} if (my === token && !status.textContent.startsWith("Play button")) status.textContent = `Playing • ${host(at.inst)}`; return; }
-      last = `${host(at.inst)} ${at.k}: ${lastReason}`; fails[at.inst] = (fails[at.inst] || 0) + 1; log("play " + last);
-    } catch(e){ last = `${host(at.inst)} ${at.k}: ${e.name === "AbortError" ? "timeout" : (e.message || e)}`; fails[at.inst] = (fails[at.inst] || 0) + 1; log("play " + last); }
-  }
-  if (my === token){
-    const inst = order()[0];
-    status.textContent = "Direct stream nahi mili (" + last + "). Invidious embed player dikha raha hoon, usme play dabao.";
-    $("emb").innerHTML = `<iframe allow="autoplay; fullscreen" allowfullscreen src="${inst}/embed/${v.videoId}?autoplay=1&listen=1"></iframe>`;
+  if(i<0||i>=queue.length)return;
+  idx=i;const v=queue[i];
+  $('now').textContent='Loading: '+v.title;render();
+  try{
+    const {data,base}=await api('/api/v1/videos/'+v.id+'?local=true&fields=adaptiveFormats,formatStreams');
+    const aud=(data.adaptiveFormats||[]).filter(f=>(f.type||'').startsWith('audio/'));
+    // prefer mp4/aac (widest browser support), highest bitrate
+    aud.sort((a,b)=>((b.type.includes('mp4'))-(a.type.includes('mp4')))||(b.bitrate-a.bitrate));
+    let url=aud[0]&&aud[0].url;
+    if(!url&&data.formatStreams&&data.formatStreams[0])url=data.formatStreams[0].url;
+    if(!url)url=base+'/latest_version?id='+v.id+'&itag=140&local=true';
+    if(url.startsWith('/'))url=base+url;
+    au.src=url;
+    await au.play();
+    $('now').textContent='▶ '+v.title+' — '+v.author;
+    document.title=v.title;
+    if('mediaSession' in navigator){
+      navigator.mediaSession.metadata=new MediaMetadata({title:v.title,artist:v.author,artwork:[{src:v.thumb}]});
+      navigator.mediaSession.setActionHandler('previoustrack',()=>play(idx-1));
+      navigator.mediaSession.setActionHandler('nexttrack',()=>play(idx+1));
+    }
+  }catch(e){
+    $('now').textContent='Could not play "'+v.title+'" ('+e.message+') — skipping';
+    setTimeout(()=>play(idx+1),1500);
   }
 }
-
-// Gaane khatam hone par agla; list khatam ho to related gaane khud load hote hain
-async function playNext(){
-  if (cur + 1 < results.length) return play(cur + 1);
-  const v = results[cur]; if (!v) return;
-  status.textContent = "Related gaane dhoondh raha hoon...";
-  for (const inst of order()){
-    try {
-      const d = await jget(`${inst}/api/v1/videos/${v.videoId}?fields=recommendedVideos`, 9000);
-      const seen = new Set(results.map(r => r.videoId));
-      const more = (d.recommendedVideos || []).filter(r => r.videoId && !seen.has(r.videoId) && (r.lengthSeconds || 0) > 0)
-        .map(r => ({videoId: r.videoId, title: r.title, author: r.author, lengthSeconds: r.lengthSeconds}));
-      if (!more.length) continue;
-      results.push(...more); render(); return play(cur + 1);
-    } catch(e){}
-  }
-  status.textContent = "Related gaane nahi mile. Dobara search karo.";
-}
-audio.addEventListener("ended", playNext);
-$("next").onclick = playNext;
-$("prev").onclick = () => play(cur - 1);
-if ("mediaSession" in navigator){
-  navigator.mediaSession.setActionHandler("nexttrack", playNext);
-  navigator.mediaSession.setActionHandler("previoustrack", () => play(cur - 1));
-}
-$("go").onclick = search;
-$("q").addEventListener("keydown", e => { if (e.key === "Enter") search(); });
+$('sb').onclick=search;
+$('q').onkeydown=e=>{if(e.key==='Enter')search()};
+$('pp').onclick=()=>{if(!au.src)return;au.paused?au.play():au.pause()};
+$('next').onclick=()=>play(idx+1);
+$('prev').onclick=()=>{au.currentTime>3?au.currentTime=0:play(idx-1)};
+$('vol').oninput=e=>au.volume=e.target.value;
+au.onplay=()=>$('pp').textContent='⏸';
+au.onpause=()=>$('pp').textContent='▶';
+au.onended=()=>play(idx+1);
+au.ontimeupdate=()=>{
+  if(au.duration){$('seek').value=au.currentTime/au.duration*1000;$('dur').textContent=fmt(au.duration)}
+  $('cur').textContent=fmt(au.currentTime);
+};
+$('seek').oninput=e=>{if(au.duration)au.currentTime=e.target.value/1000*au.duration};
 </script>
 </body>
 </html>
