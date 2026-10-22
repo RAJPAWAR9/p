@@ -5408,7 +5408,7 @@ setInterval(function(){if(State.view==='charts'&&CH.list&&!CH.busy&&Date.now()-C
     QUALITY_ORDER.forEach(function(q){dl[q]=url;});
     return{id:"yt_"+v.videoId,name:v.title||"Untitled",duration:Number(v.lengthSeconds)||0,year:"",language:"",
       image:"https://i.ytimg.com/vi/"+v.videoId+"/mqdefault.jpg",artistName:(v.author||"YouTube").replace(/ - Topic$/,""),
-      artistId:null,albumName:"",albumId:null,downloadUrl:dl,hasLyrics:false,_yt:true,_ytId:v.videoId};
+      artistId:null,albumName:"",albumId:null,downloadUrl:dl,hasLyrics:false,_yt:true,_ytId:v.videoId,_inst:inst};
   }
   async function search(q){
     var list=instances(),err=null;
@@ -5436,6 +5436,44 @@ setInterval(function(){if(State.view==='charts'&&CH.list&&!CH.busy&&Date.now()-C
       var s=document.getElementById("yt-inst");if(s)s.textContent=YT.inst.replace(/^https?:\/\//,"");
     }catch(e){if(my===YT.q)box.innerHTML='<div class="es-desc" style="padding:20px 4px">Could not reach any Invidious instance. Set one below (CORS + API must be enabled).</div>';}
   }
+  /* /latest_version answers with a redirect that has no CORS headers, which a crossorigin <audio> (needed by the WebAudio effects) rejects.
+     So resolve the real, instance-proxied audio URL through the CORS-enabled JSON API right before playback. */
+  function setCors(on){["audio-el","audio-el-2"].forEach(function(id){var a=document.getElementById(id);if(!a)return;
+    if(on){if(a.getAttribute("crossorigin")!=="anonymous")a.setAttribute("crossorigin","anonymous");}else if(a.hasAttribute("crossorigin"))a.removeAttribute("crossorigin");});}
+  async function resolveYt(track){
+    if(track._ytResolved)return"";
+    var list=[track._inst].concat(instances()).filter(function(v,i,a){return v&&a.indexOf(v)===i;}),why=[];
+    for(var i=0;i<list.length;i++){
+      try{
+        var d=await getJSON(list[i]+"/api/v1/videos/"+encodeURIComponent(track._ytId)+"?local=true",7000);
+        var af=(d.adaptiveFormats||[]).filter(function(f){return f.url&&/^audio\//.test(f.type||"");});
+        var f=af.find(function(x){return String(x.itag)==="140";})||af.find(function(x){return /mp4/.test(x.type);})||af[0];
+        var u=f&&f.url;
+        if(!u){var fs=(d.formatStreams||[])[0];u=fs&&fs.url;}
+        if(!u)throw new Error(d&&d.error?String(d.error).slice(0,60):"no stream in response");
+        if(u.charAt(0)==="/")u=list[i]+u;
+        QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u;});
+        track._ytResolved=true;track._noCors=false;return"";
+      }catch(e){why.push(list[i].replace(/^https?:\/\//,"")+": "+(e&&e.message||e));}
+    }
+    /* JSON API blocked everywhere: fall back to the plain /latest_version route (works without CORS, effects chain is bypassed) */
+    var u2=streamUrl(track._inst||list[0],track._ytId);
+    QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u2;});
+    track._ytResolved=true;track._noCors=true;
+    return why.join(" | ");
+  }
+  var _play=Player.play;
+  Player.play=async function(track){
+    if(track&&track._yt){
+      if(!track._ytResolved){toast("Loading from YouTube…");var why=await resolveYt(track);if(why)console.warn("Invidious API failed:",why);}
+      try{setCors(!track._noCors);}catch(e){}
+    }else{try{setCors(true);}catch(e){}}
+    return _play.apply(this,arguments);
+  };
+  /* surface real playback errors from the audio element for YouTube tracks */
+  ["audio-el","audio-el-2"].forEach(function(id){var a=document.getElementById(id);if(!a)return;
+    a.addEventListener("error",function(){var t=State.currentTrack;if(!t||!t._yt||!a.src)return;
+      var c=a.error?a.error.code:0;toast("YouTube audio failed (media error "+c+"). Instance may block streaming - try another in the box below.","error");});});
   window.renderYoutube=function(){
     var el=document.getElementById("view-youtube");if(!el)return;
     el.innerHTML='<div class="search-bar glass-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
