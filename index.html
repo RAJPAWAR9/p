@@ -700,7 +700,6 @@ body{overscroll-behavior-y:none;}
     <div data-nav="search" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="nlabel">Search</span></div>
     <div data-nav="charts" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span class="nlabel">Top Charts</span></div>
     <div data-nav="toplists" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h10M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="nlabel">Top Playlists</span></div>
-    <div data-nav="youtube" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg><span class="nlabel">YouTube Search</span></div>
     <div class="nav-group-label">Browse</div>
     <div data-nav="lib-songs" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="nlabel">Songs</span></div>
     <div data-nav="lib-albums" class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg><span class="nlabel">Albums</span></div>
@@ -743,7 +742,6 @@ body{overscroll-behavior-y:none;}
       <div class="view" id="view-settings"></div>
       <div class="view" id="view-charts"></div>
       <div class="view" id="view-toplists"></div>
-      <div class="view" id="view-youtube"></div>
     </div>
   </div>
 </div>
@@ -835,7 +833,6 @@ body{overscroll-behavior-y:none;}
   <div class="bn-item" data-nav="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></div>
   <div class="bn-item" data-nav="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>Search</span></div>
   <div class="bn-item" data-nav="charts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg><span>Charts</span></div>
-  <div class="bn-item" data-nav="youtube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg><span>YouTube</span></div>
   <div class="bn-item" data-nav="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18" rx="1"/><rect x="13" y="3" width="8" height="10" rx="1"/><rect x="13" y="16" width="8" height="5" rx="1"/></svg><span>Library</span></div>
   <div class="bn-item" data-nav="favorites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Favorites</span></div>
   <div class="bn-item" data-nav="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9c.29-.6.24-1.31-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06c.51.51 1.22.62 1.82.33.5-.24.9-.68 1-1.24V3a2 2 0 1 1 4 0v.09c.1.56.5 1 1 1.24.6.29 1.31.18 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06c-.51.51-.62 1.22-.33 1.82.24.5.68.9 1.24 1H21a2 2 0 1 1 0 4h-.09c-.56.1-1 .5-1.24 1z"/></svg><span>Settings</span></div>
@@ -2531,7 +2528,7 @@ function errorStateHTML(msg, retryFnStr){ return '<div class="error-state"><div 
 function backIcon(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>'; }
 
 /* ============================================================ NAVIGATION — SPA / HISTORY API ============================================================ */
-const NAV_TITLES={home:"Home",search:"Search",library:"Library",favorites:"Favorites",recent:"Recently Played",album:"Album",artist:"Artist",playlist:"Playlist",settings:"Settings",charts:"Top Charts",toplists:"Top Playlists",youtube:"YouTube Search","lib-songs":"Songs","lib-albums":"Albums","lib-artists":"Artists","lib-playlists":"Playlists",queue:"Queue",player:"Now Playing",lyrics:"Lyrics"};
+const NAV_TITLES={home:"Home",search:"Search",library:"Library",favorites:"Favorites",recent:"Recently Played",album:"Album",artist:"Artist",playlist:"Playlist",settings:"Settings",charts:"Top Charts",toplists:"Top Playlists","lib-songs":"Songs","lib-albums":"Albums","lib-artists":"Artists","lib-playlists":"Playlists",queue:"Queue",player:"Now Playing",lyrics:"Lyrics"};
 function navHash(view,params){params=params||{};if(view==="home")return "#home";if(view==="search")return "#search"+(State.searchQuery?"?q="+encodeURIComponent(State.searchQuery):"");if(["album","artist","playlist"].includes(view))return "#"+view+"/"+encodeURIComponent(params.id||"");return "#"+view;}
 function navState(view,params,depth,scrollTop){return {boosterOS:true,view:view,params:params||{},depth:Math.max(0,Number(depth)||0),scrollTop:Number(scrollTop)||0};}
 var __inVT=false;
@@ -2559,7 +2556,7 @@ function __navCore(view,params,opts){
   const apply=()=>{
     State.viewParams=params;
     $$(".view").forEach(v=>v.classList.remove("active"));
-    const map={home:"view-home",search:"view-search",library:"view-library",favorites:"view-library",recent:"view-library",album:"view-album",artist:"view-artist",playlist:"view-playlist",settings:"view-settings",charts:"view-charts",toplists:"view-toplists",youtube:"view-youtube"};
+    const map={home:"view-home",search:"view-search",library:"view-library",favorites:"view-library",recent:"view-library",album:"view-album",artist:"view-artist",playlist:"view-playlist",settings:"view-settings",charts:"view-charts",toplists:"view-toplists"};
     const target=map[view]||"view-home";
     $("#"+target).classList.add("active");State.view=view;
     $("#page-title").textContent=NAV_TITLES[view]||"Booster OS";
@@ -2585,7 +2582,6 @@ function __navCore(view,params,opts){
     else if(view==="artist")renderArtistDetail(params.id);
     else if(view==="playlist")renderPlaylistDetail(params.id);
     else if(view==="settings")renderSettings();
-    else if(view==="youtube"&&window.renderYoutube)renderYoutube();
     if(scrollEl){scrollEl.classList.remove("nav-leave");scrollEl.classList.remove("nav-enter");void scrollEl.offsetWidth;scrollEl.classList.add("nav-enter");}
   };
 
@@ -5389,124 +5385,201 @@ document.getElementById('view-charts').addEventListener('click',onClick);
 document.getElementById('view-toplists').addEventListener('click',onClick);
 setInterval(function(){if(State.view==='charts'&&CH.list&&!CH.busy&&Date.now()-CH.at>300000)window.renderCharts(true);if(State.view==='toplists'&&TL.html&&!TL.busy&&Date.now()-TL.at>300000)window.renderToplists(true)},60000);
 })();
-/* ===== YouTube search + playback via Invidious (separate from the main search) ===== */
+/* ===== INVIDIOUS block (inside app scope) ===== */
+{
+
+/* ===== INVIDIOUS (YouTube) — separate YouTube search view + playback through the same Player =====
+   - Auto backend switching: failed instances are skipped for 3 min, the working one is tried first,
+     and if everything fails a list of public instances is auto-discovered from api.invidious.io.
+   - Stream format is chosen by what THIS browser can play (webm/opus on Chrome/Firefox, mp4/aac on Safari).
+   - Servers can be edited in the YouTube view (gear icon). Saved in localStorage. */
 (function(){
-  var LS="bos.invidious.instance";
-  /* Put your own / NerdVPN instance first. Others are fallbacks, tried in order if the first fails. */
-  var DEFAULTS=["https://invidious.nerdvpn.de","https://yewtu.be","https://inv.nadeko.net","https://invidious.f5.si"];
-  var YT={q:"",busy:false,list:[],inst:null};
-  function lsGet(){try{return localStorage.getItem(LS)||"";}catch(e){return "";}}
-  function lsSet(v){try{v?localStorage.setItem(LS,v):localStorage.removeItem(LS);}catch(e){}}
-  function norm(u){u=String(u||"").trim().replace(/\/+$/,"");if(u&&!/^https?:\/\//.test(u))u="https://"+u;return u;}
-  function instances(){var c=norm(lsGet());return c?[c].concat(DEFAULTS.filter(function(d){return d!==c;})):DEFAULTS.slice();}
-  async function getJSON(url,ms){var c=new AbortController(),t=setTimeout(function(){c.abort();},ms||9000);
-    try{var r=await fetch(url,{signal:c.signal});if(!r.ok)throw new Error("HTTP "+r.status);return await r.json();}finally{clearTimeout(t);}}
-  function streamUrl(inst,id){ /* audio-only m4a (itag 140), proxied through the instance so CORS/IP-lock are not a problem */
-    return inst+"/latest_version?id="+encodeURIComponent(id)+"&itag=140&local=true";}
-  function toTrack(v,inst){
-    var url=streamUrl(inst,v.videoId),dl={};
-    QUALITY_ORDER.forEach(function(q){dl[q]=url;});
-    return{id:"yt_"+v.videoId,name:v.title||"Untitled",duration:Number(v.lengthSeconds)||0,year:"",language:"",
-      image:"https://i.ytimg.com/vi/"+v.videoId+"/mqdefault.jpg",artistName:(v.author||"YouTube").replace(/ - Topic$/,""),
-      artistId:null,albumName:"",albumId:null,downloadUrl:dl,hasLyrics:false,_yt:true,_ytId:v.videoId,_inst:inst};
-  }
-  async function search(q){
-    var list=instances(),err=null;
-    for(var i=0;i<list.length;i++){
-      try{
-        var d=await getJSON(list[i]+"/api/v1/search?type=video&q="+encodeURIComponent(q));
-        if(!Array.isArray(d))throw new Error("bad response");
-        YT.inst=list[i];
-        return d.filter(function(v){return v&&v.videoId&&v.type!=="livestream"&&!v.liveNow&&v.lengthSeconds>0;}).map(function(v){return toTrack(v,list[i]);});
-      }catch(e){err=e;}
-    }
-    throw err||new Error("no instance");
-  }
-  function results(){return document.getElementById("yt-results");}
-  async function run(){
-    var box=results();if(!box)return;
-    if(!YT.q){box.innerHTML=emptyStateHTML(svgMusicEmpty(),"Search YouTube","Results play as audio through Invidious.");return;}
-    box.innerHTML='<div class="es-desc" style="padding:20px 4px">Searching…</div>';
-    var my=YT.q;
+  var LS="bos_inv_instances_v1";
+  var DEFAULTS=["https://invidious.nerdvpn.de","https://inv.nadeko.net","https://yewtu.be"];
+  var extra=[], discovered=false, lastBase="", bad={};
+  function norm(u){u=String(u||"").trim().replace(/\/+$/,"");if(!u)return"";if(!/^https?:\/\//i.test(u))u="https://"+u;return u;}
+  function loadInst(){try{var a=JSON.parse(localStorage.getItem(LS)||"null");if(Array.isArray(a)&&a.length)return a.map(norm).filter(Boolean);}catch(_){}return DEFAULTS.slice();}
+  var inst=loadInst();
+  function saveInst(){try{localStorage.setItem(LS,JSON.stringify(inst));}catch(_){}}
+  function isBad(b){return (bad[b]||0)>Date.now();}
+  function host(b){try{return new URL(b).host;}catch(_){return b;}}
+
+  async function discover(){
+    if(discovered)return;discovered=true;
     try{
-      var l=await search(my);if(my!==YT.q)return;
-      YT.list=l;var key=storeCtx("yt-search",l);
-      box.innerHTML=l.length?'<div class="row-list">'+l.map(function(t,i){return songRow(t,i,{ctxKey:key});}).join("")+'</div>'
-        :'<div class="es-desc" style="padding:20px 4px">No results.</div>';
-      var s=document.getElementById("yt-inst");if(s)s.textContent=YT.inst.replace(/^https?:\/\//,"");
-    }catch(e){if(my===YT.q)box.innerHTML='<div class="es-desc" style="padding:20px 4px">Could not reach any Invidious instance. Set one below (CORS + API must be enabled).</div>';}
+      var r=await fetch("https://api.invidious.io/instances.json?sort_by=health",{signal:AbortSignal.timeout(8000)});
+      var j=await r.json();
+      j.forEach(function(p){var m=p&&p[1];if(m&&m.api===true&&m.cors===true&&m.type==="https"&&m.uri){var u=norm(m.uri);if(inst.indexOf(u)<0&&extra.indexOf(u)<0&&extra.length<6)extra.push(u);}});
+    }catch(_){}
   }
-  /* /latest_version answers with a redirect that has no CORS headers, which a crossorigin <audio> (needed by the WebAudio effects) rejects.
-     So resolve the real, instance-proxied audio URL through the CORS-enabled JSON API right before playback. */
-  function setCors(on){["audio-el","audio-el-2"].forEach(function(id){var a=document.getElementById(id);if(!a)return;
-    if(on){if(a.getAttribute("crossorigin")!=="anonymous")a.setAttribute("crossorigin","anonymous");}else if(a.hasAttribute("crossorigin"))a.removeAttribute("crossorigin");});}
-  /* Live list of healthy public instances (cached 12h) so we are not stuck on one that YouTube has blocked. */
-  var LIVE_KEY="bos.invidious.live";
-  async function liveInstances(){
-    try{var c=JSON.parse(localStorage.getItem(LIVE_KEY)||"null");if(c&&Date.now()-c.t<43200000&&c.l.length)return c.l;}catch(e){}
-    try{
-      var d=await getJSON("https://api.invidious.io/instances.json?sort_by=health",6000);
-      var l=d.filter(function(x){return x[1]&&x[1].api&&x[1].type==="https"&&x[1].uri;}).map(function(x){return x[1].uri.replace(/\/+$/,"");}).slice(0,12);
-      try{localStorage.setItem(LIVE_KEY,JSON.stringify({t:Date.now(),l:l}));}catch(e){}
-      return l;
-    }catch(e){return[];}
+  function order(avoid){
+    var all=inst.concat(extra);
+    var good=all.filter(function(b){return !isBad(b)&&b!==avoid;});
+    if(lastBase&&good.indexOf(lastBase)>0){good.splice(good.indexOf(lastBase),1);good.unshift(lastBase);}
+    var rest=all.filter(function(b){return isBad(b)||b===avoid;});
+    return good.concat(rest);
   }
-  async function tryOne(inst,id){
-    var d=await getJSON(inst+"/api/v1/videos/"+encodeURIComponent(id)+"?local=true",8000);
-    var af=(d.adaptiveFormats||[]).filter(function(f){return f.url&&/^audio\//.test(f.type||"");});
-    var f=af.find(function(x){return String(x.itag)==="140";})||af.find(function(x){return /mp4/.test(x.type);})||af[0];
-    var u=f&&f.url;
-    if(!u){var fs=(d.formatStreams||[])[0];u=fs&&fs.url;}
-    if(!u)throw new Error(d&&d.error?String(d.error).slice(0,60):"no stream");
-    if(u.charAt(0)==="/")u=inst+u;
-    return u;
-  }
-  async function resolveYt(track){
-    if(track._ytResolved)return"";
-    var base=[track._inst].concat(instances()),why=[];
-    /* round 1: saved + built-in instances in parallel; round 2: live list from api.invidious.io */
+  /* try every instance until one returns valid JSON */
+  async function tryAll(path,o){
+    o=o||{};var lastErr;
     for(var round=0;round<2;round++){
-      var list=(round?await liveInstances():base).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).slice(0,round?10:5);
-      if(!list.length)continue;
-      try{
-        var u=await Promise.any(list.map(function(inst){return tryOne(inst,track._ytId).catch(function(e){why.push(inst.replace(/^https?:\/\//,"")+": "+(e&&e.message||e));throw e;});}));
-        QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u;});
-        track._ytResolved=true;track._noCors=false;return"";
-      }catch(e){}
+      var list=order(o.avoid);
+      for(var k=0;k<list.length;k++){
+        var base=list[k];
+        try{
+          var res=await fetch(base+path,{signal:AbortSignal.timeout(o.timeout||9000)});
+          if(!res.ok)throw new Error(host(base)+" HTTP "+res.status);
+          var data=await res.json();
+          if(o.ok&&!o.ok(data))throw new Error(host(base)+": "+((data&&data.error)||"bad response"));
+          lastBase=base;delete bad[base];
+          return {data:data,base:base};
+        }catch(e){bad[base]=Date.now()+3*60*1000;lastErr=e;}
+      }
+      if(round===0&&!discovered){await discover();continue;}
+      break;
     }
-    var u2=streamUrl(track._inst||base[0],track._ytId);
-    QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u2;});
-    track._ytResolved=true;track._noCors=true;
-    return why.join(" | ")||"all instances failed";
+    throw lastErr||new Error("No Invidious server reachable");
   }
-  var _play=Player.play;
-  Player.play=async function(track){
-    if(track&&track._yt){
-      if(!track._ytResolved){toast("Loading from YouTube…");var why=await resolveYt(track);if(why)console.warn("Invidious API failed:",why);}
-      try{setCors(!track._noCors);}catch(e){}
-    }else{try{setCors(true);}catch(e){}}
-    return _play.apply(this,arguments);
+
+  var probe=document.createElement("audio");
+  function canPlay(t){try{return !!probe.canPlayType(t);}catch(_){return false;}}
+  function pick(d){
+    var a=(d.adaptiveFormats||[]).filter(function(f){return f.type&&f.type.indexOf("audio/")===0&&f.url&&canPlay(f.type);})
+      .sort(function(x,y){return (parseInt(y.bitrate)||0)-(parseInt(x.bitrate)||0);});
+    if(a.length)return a[0];
+    var s=(d.formatStreams||[]).filter(function(f){return f.url&&canPlay(f.type);});
+    return s[0]||(d.formatStreams||[])[0]||null;
+  }
+  function abs(u,base){return /^https?:/i.test(u)?u:base+(u.charAt(0)==="/"?"":"/")+u;}
+
+  /* fill track.downloadUrl with a fresh playable URL */
+  async function resolve(t,opt){
+    opt=opt||{};
+    if(!opt.force&&t._ytAt&&Date.now()-t._ytAt<20*60*1000&&Object.keys(t.downloadUrl||{}).length)return t;
+    if(t._ytPending&&!opt.force)return t._ytPending;
+    var p=(async function(){
+      var r=await tryAll("/api/v1/videos/"+encodeURIComponent(t._yt)+"?local=true",{avoid:opt.avoid,ok:function(d){return d&&(d.adaptiveFormats||d.formatStreams);}});
+      var f=pick(r.data);if(!f)throw new Error("no playable stream");
+      var url=abs(f.url,r.base),dl={};
+      ["12","48","96","160","320"].forEach(function(k){dl[k]=url;});
+      t.downloadUrl=dl;t._ytAt=Date.now();t._ytBase=r.base;t._ytType=f.type;
+      if(!t.duration&&r.data.lengthSeconds)t.duration=r.data.lengthSeconds;
+      return t;
+    })();
+    t._ytPending=p;
+    try{return await p;}finally{t._ytPending=null;}
+  }
+
+  /* ---------- hooks into the existing player ---------- */
+  var _rpt=resolvePlayableTrack;
+  resolvePlayableTrack=async function(t){
+    if(t&&t._yt){try{return await resolve(t);}catch(e){toast("YouTube stream unavailable ("+(e&&e.message||"error")+")","error");return null;}}
+    return _rpt.apply(this,arguments);
   };
-  /* surface real playback errors from the audio element for YouTube tracks */
-  ["audio-el","audio-el-2"].forEach(function(id){var a=document.getElementById(id);if(!a)return;
-    a.addEventListener("error",function(){var t=State.currentTrack;if(!t||!t._yt||!a.src)return;
-      var c=a.error?a.error.code:0;toast("YouTube audio failed (media error "+c+"). Instance may block streaming - try another in the box below.","error");});});
-  window.renderYoutube=function(){
-    var el=document.getElementById("view-youtube");if(!el)return;
-    el.innerHTML='<div class="search-bar glass-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
-      +'<input type="text" id="yt-input" placeholder="Search YouTube (via Invidious)…" autocomplete="off" value="'+esc(YT.q)+'"></div>'
-      +'<div id="yt-results" style="margin-top:14px"></div>'
-      +'<div class="es-desc" style="margin:22px 4px 8px;text-align:left;font-size:12.5px">Instance: <b id="yt-inst">'+esc((YT.inst||instances()[0]).replace(/^https?:\/\//,""))+'</b></div>'
-      +'<div style="display:flex;gap:8px;margin:0 4px 20px"><input type="text" id="yt-set" class="search-bar glass-1" style="flex:1;padding:10px 14px;color:inherit;border:0" placeholder="https://your-invidious.example" value="'+esc(lsGet())+'">'
-      +'<button class="btn btn-primary" id="yt-save">Save</button></div>';
-    var inp=document.getElementById("yt-input");
-    var go=function(){YT.q=inp.value.trim();run();};
-    inp.addEventListener("input",debounce(go,450));
-    inp.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();go();inp.blur();}});
-    document.getElementById("yt-save").addEventListener("click",function(){lsSet(norm(document.getElementById("yt-set").value));YT.inst=null;toast("Instance saved");if(YT.q)run();});
-    run();
+  var _pp=Player.play;
+  Player.play=async function(t,c,i,o){
+    if(t&&t._yt){
+      try{await resolve(t);}catch(e){if(!(o&&o.autoTransition))toast("YouTube stream unavailable ("+(e&&e.message||"error")+")","error");return false;}
+    }
+    var r=await _pp.apply(this,arguments);
+    try{var n=State.queue&&State.queue[State.queueIndex+1];if(n&&n._yt)resolve(n).catch(function(){});}catch(_){}
+    return r;
   };
+  var _lap=loadAndPlay;
+  loadAndPlay=async function(el,track,startAt){
+    if(!track||!track._yt)return _lap.apply(this,arguments);
+    try{return await _lap.apply(this,arguments);}
+    catch(e){ /* stream dead -> switch to another server and retry once */
+      await resolve(track,{force:true,avoid:track._ytBase});
+      return _lap.call(this,el,track,startAt);
+    }
+  };
+
+  /* ---------- UI ---------- */
+  var view=document.createElement("div");view.className="view";view.id="view-youtube";
+  var anchor=document.getElementById("view-toplists");
+  (anchor?anchor.parentNode:document.getElementById("view-scroll")).appendChild(view);
+  var ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9.5v5l4.5-2.5z"/></svg>';
+  var sideQ=document.querySelector('.nav-item[data-nav="queue"]');
+  var side=document.createElement("div");side.className="nav-item";side.dataset.nav="youtube";side.innerHTML=ICON+'<span class="nlabel">YouTube</span>';
+  if(sideQ)sideQ.parentNode.insertBefore(side,sideQ);
+  var bnSet=document.querySelector('.bn-item[data-nav="settings"]');
+  var bn=document.createElement("div");bn.className="bn-item";bn.dataset.nav="youtube";bn.innerHTML=ICON+'<span>YouTube</span>';
+  if(bnSet)bnSet.parentNode.insertBefore(bn,bnSet);
+
+  var q="",page=1,list=[],ctx="yt-search",built=false;
+  function mk(v){
+    var id=v.videoId;
+    return {id:"yt_"+id,_yt:id,name:v.title||"Untitled",artistName:v.author||"YouTube",artistId:null,albumName:"YouTube",albumId:null,
+      duration:Number(v.lengthSeconds)||0,image:"https://i.ytimg.com/vi/"+id+"/hqdefault.jpg",downloadUrl:{},hasLyrics:false,language:"",year:"",source:"youtube"};
+  }
+  function build(){
+    if(built)return;built=true;
+    view.innerHTML='<div class="search-bar glass-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>'
+      +'<input type="text" id="yt-input" placeholder="Search YouTube (via Invidious)…" autocomplete="off">'
+      +'<button class="icon-btn" id="yt-gear" title="Servers" aria-label="Servers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></button></div>'
+      +'<div id="yt-servers" style="display:none;margin:10px 4px;padding:12px;border-radius:14px;background:rgba(255,255,255,.06)">'
+      +'<div class="row-sub" style="margin-bottom:6px">Invidious servers (one per line, first is tried first). Auto-switches if one fails.</div>'
+      +'<textarea id="yt-inst" rows="4" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,.25);color:inherit;border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px;font:13px monospace"></textarea>'
+      +'<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn" id="yt-save">Save</button><button class="btn btn-ghost" id="yt-test">Test</button><button class="btn btn-ghost" id="yt-reset">Reset</button></div>'
+      +'<div id="yt-test-out" class="row-sub" style="margin-top:8px;white-space:pre-line"></div></div>'
+      +'<div id="yt-status" class="row-sub" style="margin:8px 6px"></div><div id="yt-results"></div>'
+      +'<div style="text-align:center;margin:14px 0"><button class="btn btn-ghost" id="yt-more" style="display:none">Load more</button></div>';
+    var input=document.getElementById("yt-input");
+    input.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();input.blur();search(false);}});
+    document.getElementById("yt-more").onclick=function(){search(true);};
+    var panel=document.getElementById("yt-servers"),ta=document.getElementById("yt-inst");
+    document.getElementById("yt-gear").onclick=function(){ta.value=inst.join("\n");panel.style.display=panel.style.display==="none"?"block":"none";};
+    document.getElementById("yt-save").onclick=function(){
+      var l=ta.value.split(/\n+/).map(norm).filter(Boolean);
+      inst=l.length?l:DEFAULTS.slice();bad={};lastBase="";saveInst();ta.value=inst.join("\n");toast("Servers saved","success");
+    };
+    document.getElementById("yt-reset").onclick=function(){inst=DEFAULTS.slice();bad={};lastBase="";saveInst();ta.value=inst.join("\n");};
+    document.getElementById("yt-test").onclick=async function(){
+      var out=document.getElementById("yt-test-out");out.textContent="Testing…";
+      var l=ta.value.split(/\n+/).map(norm).filter(Boolean),lines=[];
+      await Promise.all(l.map(async function(b){
+        var t0=performance.now();
+        try{var r=await fetch(b+"/api/v1/stats",{signal:AbortSignal.timeout(6000)});if(!r.ok)throw 0;await r.json();lines.push("✅ "+host(b)+"  "+Math.round(performance.now()-t0)+" ms");}
+        catch(_){lines.push("❌ "+host(b)+"  (down / CORS blocked / API disabled)");}
+      }));
+      out.textContent=lines.join("\n");
+    };
+  }
+  async function search(more){
+    var input=document.getElementById("yt-input"),st=document.getElementById("yt-status"),res=document.getElementById("yt-results"),btn=document.getElementById("yt-more");
+    if(!more){q=input.value.trim();if(!q)return;page=1;list=[];ctx="yt-search-"+Date.now();res.innerHTML="";}else page++;
+    st.textContent="Searching…";btn.style.display="none";
+    try{
+      var r=await tryAll("/api/v1/search?type=video&page="+page+"&q="+encodeURIComponent(q),{ok:Array.isArray});
+      var seen={};list.forEach(function(t){seen[t._yt]=1;});
+      var items=r.data.filter(function(v){return v&&v.videoId&&v.lengthSeconds>0&&!seen[v.videoId];}).map(mk);
+      list.push.apply(list,items);storeCtx(ctx,list);
+      res.innerHTML=list.length?list.map(function(t,i){return songRow(t,i,{ctxKey:ctx});}).join(""):emptyStateHTML(svgMusicEmpty(),"No results","Try a different search.");
+      st.textContent="via "+host(r.base);
+      btn.style.display=items.length?"":"none";
+    }catch(e){
+      if(more)page--;
+      st.textContent="";
+      if(!list.length)res.innerHTML='<div class="empty-state"><div class="es-title">No Invidious server worked</div><div class="es-desc">'+esc(e&&e.message||"error")+'<br>Open the server icon above and add a working instance.</div></div>';
+      else toast("Couldn't load more: "+(e&&e.message||"error"),"error");
+    }
+  }
+  function open(){
+    build();
+    document.querySelectorAll(".view").forEach(function(v){v.classList.remove("active");});
+    view.classList.add("active");State.view="youtube";
+    var pt=document.getElementById("page-title");if(pt)pt.textContent="YouTube";
+    document.querySelectorAll(".nav-item,.bn-item").forEach(function(n){n.classList.toggle("active",n.dataset.nav==="youtube");});
+    var sc=document.getElementById("view-scroll");if(sc)sc.scrollTop=0;
+    if(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches){var i=document.getElementById("yt-input");if(i)try{i.focus({preventScroll:true});}catch(_){}}
+  }
+  side.addEventListener("click",open);bn.addEventListener("click",open);
+  window.BosInvidious={search:function(s){build();open();document.getElementById("yt-input").value=s;return search(false);},resolve:resolve,setInstances:function(l){inst=l.map(norm).filter(Boolean);saveInst();}};
 })();
+
+}
+
 })();
 </script>
 
