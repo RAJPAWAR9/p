@@ -5440,27 +5440,44 @@ setInterval(function(){if(State.view==='charts'&&CH.list&&!CH.busy&&Date.now()-C
      So resolve the real, instance-proxied audio URL through the CORS-enabled JSON API right before playback. */
   function setCors(on){["audio-el","audio-el-2"].forEach(function(id){var a=document.getElementById(id);if(!a)return;
     if(on){if(a.getAttribute("crossorigin")!=="anonymous")a.setAttribute("crossorigin","anonymous");}else if(a.hasAttribute("crossorigin"))a.removeAttribute("crossorigin");});}
+  /* Live list of healthy public instances (cached 12h) so we are not stuck on one that YouTube has blocked. */
+  var LIVE_KEY="bos.invidious.live";
+  async function liveInstances(){
+    try{var c=JSON.parse(localStorage.getItem(LIVE_KEY)||"null");if(c&&Date.now()-c.t<43200000&&c.l.length)return c.l;}catch(e){}
+    try{
+      var d=await getJSON("https://api.invidious.io/instances.json?sort_by=health",6000);
+      var l=d.filter(function(x){return x[1]&&x[1].api&&x[1].type==="https"&&x[1].uri;}).map(function(x){return x[1].uri.replace(/\/+$/,"");}).slice(0,12);
+      try{localStorage.setItem(LIVE_KEY,JSON.stringify({t:Date.now(),l:l}));}catch(e){}
+      return l;
+    }catch(e){return[];}
+  }
+  async function tryOne(inst,id){
+    var d=await getJSON(inst+"/api/v1/videos/"+encodeURIComponent(id)+"?local=true",8000);
+    var af=(d.adaptiveFormats||[]).filter(function(f){return f.url&&/^audio\//.test(f.type||"");});
+    var f=af.find(function(x){return String(x.itag)==="140";})||af.find(function(x){return /mp4/.test(x.type);})||af[0];
+    var u=f&&f.url;
+    if(!u){var fs=(d.formatStreams||[])[0];u=fs&&fs.url;}
+    if(!u)throw new Error(d&&d.error?String(d.error).slice(0,60):"no stream");
+    if(u.charAt(0)==="/")u=inst+u;
+    return u;
+  }
   async function resolveYt(track){
     if(track._ytResolved)return"";
-    var list=[track._inst].concat(instances()).filter(function(v,i,a){return v&&a.indexOf(v)===i;}),why=[];
-    for(var i=0;i<list.length;i++){
+    var base=[track._inst].concat(instances()),why=[];
+    /* round 1: saved + built-in instances in parallel; round 2: live list from api.invidious.io */
+    for(var round=0;round<2;round++){
+      var list=(round?await liveInstances():base).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).slice(0,round?10:5);
+      if(!list.length)continue;
       try{
-        var d=await getJSON(list[i]+"/api/v1/videos/"+encodeURIComponent(track._ytId)+"?local=true",7000);
-        var af=(d.adaptiveFormats||[]).filter(function(f){return f.url&&/^audio\//.test(f.type||"");});
-        var f=af.find(function(x){return String(x.itag)==="140";})||af.find(function(x){return /mp4/.test(x.type);})||af[0];
-        var u=f&&f.url;
-        if(!u){var fs=(d.formatStreams||[])[0];u=fs&&fs.url;}
-        if(!u)throw new Error(d&&d.error?String(d.error).slice(0,60):"no stream in response");
-        if(u.charAt(0)==="/")u=list[i]+u;
+        var u=await Promise.any(list.map(function(inst){return tryOne(inst,track._ytId).catch(function(e){why.push(inst.replace(/^https?:\/\//,"")+": "+(e&&e.message||e));throw e;});}));
         QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u;});
         track._ytResolved=true;track._noCors=false;return"";
-      }catch(e){why.push(list[i].replace(/^https?:\/\//,"")+": "+(e&&e.message||e));}
+      }catch(e){}
     }
-    /* JSON API blocked everywhere: fall back to the plain /latest_version route (works without CORS, effects chain is bypassed) */
-    var u2=streamUrl(track._inst||list[0],track._ytId);
+    var u2=streamUrl(track._inst||base[0],track._ytId);
     QUALITY_ORDER.forEach(function(q){track.downloadUrl[q]=u2;});
     track._ytResolved=true;track._noCors=true;
-    return why.join(" | ");
+    return why.join(" | ")||"all instances failed";
   }
   var _play=Player.play;
   Player.play=async function(track){
